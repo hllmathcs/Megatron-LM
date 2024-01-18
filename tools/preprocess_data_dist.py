@@ -173,7 +173,7 @@ def get_args():
     group = parser.add_argument_group(title='runtime')
     group.add_argument('--torch-backend', type=str, default='gloo', choices=['gloo', 'mpi'],
                        help='Select torch.distributed backend.')
-    group.add_argument('--local_rank', type=int, default=None,
+    group.add_argument('--local-rank', type=int, default=None,
                        help='Local rank of calling process on its node (from torch.distributed.launch).')
     group.add_argument('--merge', type=str, default='parallel', choices=['parallel', 'serial', 'both'],
                        help=('Method to merge intermediate per-rank files into the final data files.  '
@@ -193,7 +193,7 @@ def get_args():
     args.keep_empty = False
 
     # initialize our distributed environment
-    args.distctx = DistData(backend=args.torch_backend, use_mpi4py=True)
+    args.distctx = DistData(backend=args.torch_backend, use_mpi4py=False)
 
     # some functions like build_tokenizer use args.rank to filter stdout messages
     args.rank = args.distctx.rank
